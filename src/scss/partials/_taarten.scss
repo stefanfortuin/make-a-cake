@@ -1,0 +1,22 @@
+.taarten{
+	.types{
+		display: flex;
+		flex-flow: row wrap;
+		.type{
+			display: flex;
+			flex: 0 0 29%;
+			flex-flow: column;
+			text-align: center;
+			padding: 10px;
+			margin: 8px;
+			border-radius: 5px;
+			#title{
+				height: 40px;
+				font-size: 24px;
+				font-weight: bold;
+			}
+			#desc{
+			}
+		}
+	}
+}

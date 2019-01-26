@@ -1,0 +1,45 @@
+#main-block{
+	font-weight: bold;
+	position: absolute;
+	bottom: 1vw;
+	top: 5vw;
+	right: 5vw;
+	left: 5vw;
+	#logo{
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 180px;
+	}
+	.nav-bar{
+		position: absolute;
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: flex-start;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		a{
+			display: inline-flex;
+			align-items:center;
+			border-radius: 3px;
+			color: black;
+			margin-bottom: 10px;
+			height: 30px;
+			width: 100px;
+			text-align:left;
+			padding: 0 10px 0px 5px;
+			transition: background-color 0.2s ease;
+		}
+		span{
+			transition: transform .3s ease-in-out;
+		}
+		a:hover{
+			background-color: rgb(211, 211, 211) ;
+			span{
+				transform: translate(10px, 0px);
+			}	
+		}
+	}
+}
