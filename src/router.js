@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './pages/Home.vue'
-
 Vue.use(Router)
 
 export default new Router({
@@ -11,32 +9,34 @@ export default new Router({
     {
 		path: '/',
 		name: 'home',
-		component: Home
+		components: {
+			navigation: () => import('@/components/navigation/nav_home'),
+			content: () => import('@/components/content/content_home')
+		}
+	},
+	{
+		path: '/create',
+		name: 'create',
+		components: {
+			navigation: () => import('@/components/navigation/nav_create'),
+			create: () => import('@/components/ThreeScene'),
+		}
 	},
 	{
 		path: '/taarten',
 		name: 'taarten',
-		component: () => import('@/pages/taarten')
-	},
-	{
-		path: '/cupcakes',
-		name: 'cupcakes',
-		component: () => import('@/pages/cupcakes')
+		components: {
+			navigation: () => import('@/components/navigation/nav_taarten') ,
+			content: () => import('@/components/content/content_taarten')
+		}
 	},
 	{
 		path: '/gallerij',
 		name: 'gallerij',
-		component: () => import('@/pages/gallerij')
-	},
-	{
-		path: '/prijzen',
-		name: 'prijzen',
-		component: () => import('@/pages/prijzen')
-	},
-	{
-		path: '/bestellen',
-		name: 'bestellen',
-		component: () => import('@/pages/bestellen')
+		components: {
+			navigation: () => import('@/components/navigation/nav_gallerij') ,
+			content: () => import('@/components/content/content_gallerij')
+		}
 	},
   ]
 })

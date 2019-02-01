@@ -6,7 +6,8 @@
 <script>
 import {mapMutations, mapGetters} from 'vuex';
 import * as THREE from 'three';
-import FBXLoader from 'three-fbxloader-offical'
+// import FBXLoader from 'three-fbxloader-offical'
+import Cake from './Cake.js';
 var OrbitControls = require('three-orbit-controls')(THREE)
 
 export default {
@@ -33,7 +34,8 @@ export default {
 		this.camera.position.y = 10;
 		this.camera.rotation.z = -45 * Math.PI / 180;
 		this.controls = new OrbitControls(this.camera);
-		this.controls.enableZoom = false;
+		this.controls.minDistance = 10;
+		this.controls.maxDistance = 40; 
 		this.controls.enablePan = false;
 		this.controls.minPolarAngle = -90 * Math.PI / 180;
 		this.controls.maxPolarAngle = Math.PI/2;
@@ -57,7 +59,10 @@ export default {
 		var ambient = new THREE.AmbientLight( 0x404040 ); // soft white light
 		this.scene.add( ambient );
 
-		this.loader = new FBXLoader();
+		// this.loader = new FBXLoader();
+		this.cake = new Cake(5);
+		this.cake.Layer();
+		this.scene.add(this.cake.mesh);
 
         this.renderer = new THREE.WebGLRenderer({antialias: true, aplha: true});
 		this.renderer.shadowMap.enabled = true;
@@ -104,6 +109,15 @@ export default {
   mounted() {
       this.init();
       this.animate();
+	  this.$root.$on('addlayer', () => {
+		  this.cake.Layer();
+	  })
+	  this.$root.$on('dellayer', () => {
+		  this.cake.DeleteLayer();
+	  })
+	  this.$root.$on('topping', () => {
+		  this.cake.Topping();
+	  })
   }
 }
 </script>
@@ -112,6 +126,7 @@ export default {
 #container{
 	clear:both;
 }
+
 </style>
 
 

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-		
+		Dit is het home scherm
   </div>
 </template>
 

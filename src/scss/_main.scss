@@ -1,4 +1,11 @@
 @import './variables';
 
+//transitions
+@import './transitions/fade';
+@import './transitions/content';
+
+//partials
 @import './partials/nav-bar';
 @import './partials/taarten';
+@import './partials/home';
+@import './partials/content-container';

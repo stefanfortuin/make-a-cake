@@ -5,11 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-	  currentObject: ""
+	  currentObject: null
   },
   mutations: {
-	  changeObject(state,name){
-		  state.currentObject = name;
+	  changeObject(state, object){
+		  state.currentObject = object;
 	  }
   },
   actions: {
