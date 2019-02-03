@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import TweenLite from 'gsap/TweenLite';
 
-const height = 1;
+const layer_height = 1;
 const radials = 22;
-const fillingHeight = 0.6;
+const filling_height = 0.6;
 
 class Cake{
 	constructor(persons){
@@ -22,8 +22,8 @@ class Cake{
 		if (layers != 0)
 			this.Filling();
 
-		let layer_geometry = new THREE.CylinderBufferGeometry(this.persons, this.persons, height, radials);
-		layer_geometry.translate(0,0.5,0);
+		let layer_geometry = new THREE.CylinderBufferGeometry(this.persons, this.persons, layer_height, radials);
+		layer_geometry.translate(0,layer_height/2,0);
 		let layer_material = new THREE.MeshLambertMaterial({color: 0xC9B59A});
 		let layer = new THREE.Mesh(layer_geometry, layer_material);
 
@@ -35,8 +35,8 @@ class Cake{
 	}
 
 	Filling(){
-		let filling_geometry = new THREE.CylinderBufferGeometry(this.persons, this.persons, fillingHeight, radials);
-		filling_geometry.translate(0,0.5,0);
+		let filling_geometry = new THREE.CylinderBufferGeometry(this.persons, this.persons, filling_height, radials);
+		filling_geometry.translate(0,layer_height/2,0);
 		let fliling_material = new THREE.MeshLambertMaterial({color: 0xff0000});
 		let filling = new THREE.Mesh(filling_geometry, fliling_material);
 		
@@ -48,13 +48,13 @@ class Cake{
 	}
 
 	Topping(){
-		let geometry = new THREE.BoxBufferGeometry(0.2,0.2,0.2)
-		let material = new THREE.MeshLambertMaterial({color: 0xff0000});
-		let layers = this.TotalLayers();
+		let topping_geometry = new THREE.BoxBufferGeometry(0.2,0.2,0.2)
+		topping_geometry.translate(0,0.1,0);
+		let topping_material = new THREE.MeshLambertMaterial({color: 0xff0000});
 		for (let i = 0; i < 50; i++) {
-			let top = new THREE.Mesh(geometry, material);
-			top.name = "top"
-			top.position.y = (layers * height/2) + (layers - 1 + fillingHeight/2);
+			let top = new THREE.Mesh(topping_geometry, topping_material);
+			top.name = "top";
+			top.position.y = this.ToppingPosition();
 			let angle = Math.random()*Math.PI*2;
 			let radius_sq = Math.random() * this.persons * this.persons -1;
 			top.position.z = Math.sqrt(radius_sq) * Math.cos(angle);
@@ -78,13 +78,21 @@ class Cake{
 		if (layers == 0)
 			return 0
 
-		let layerPos = height/2 + fillingHeight/2;
+		let layerPos = layer_height/2 + filling_height/2;
 		return layers * (layerPos * 2);
 	}
 
 	FillingPosition(){
-		let fillingPos = height + fillingHeight;
+		let fillingPos = layer_height + filling_height;
 		return this.TotalLayers() * fillingPos - (fillingPos/2);
+	}
+
+	ToppingPosition(){
+		let layers = this.TotalLayers()
+		let fillings = this.TotalFillings();
+
+		let y = (layers * layer_height) + (fillings * filling_height);
+		return y;
 	}
 
 	TotalLayers(){
@@ -94,6 +102,15 @@ class Cake{
 			return t
 		}, 0)
 		return layers;
+	}
+
+	TotalFillings(){
+		let fillings = this.mesh.children.reduce((t,x) => { 
+			if(x.name === "filling") 
+				t += 1
+			return t
+		}, 0)
+		return fillings;
 	}
 };
 
