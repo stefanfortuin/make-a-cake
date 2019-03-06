@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import TweenLite from 'gsap/TweenLite';
+// import Layer from './Layer';
+// import Filling from './Filling';
 
 const layer_height = 1;
 const radials = 22;
@@ -22,6 +24,9 @@ class Cake{
 		if (layers != 0)
 			this.Filling();
 
+		// let layer = new Layer()
+		// this.mesh.add(layer.create());
+
 		let layer_geometry = new THREE.CylinderBufferGeometry(this.persons, this.persons, layer_height, radials);
 		layer_geometry.translate(0,layer_height/2,0);
 		let layer_material = new THREE.MeshLambertMaterial({color: 0xC9B59A});
@@ -35,6 +40,9 @@ class Cake{
 	}
 
 	Filling(){
+		// let filling = new Filling()
+		// this.mesh.add(filling.create())
+
 		let filling_geometry = new THREE.CylinderBufferGeometry(this.persons, this.persons, filling_height, radials);
 		filling_geometry.translate(0,layer_height/2,0);
 		let fliling_material = new THREE.MeshLambertMaterial({color: 0xff0000});
