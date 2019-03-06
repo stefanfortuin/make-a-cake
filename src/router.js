@@ -9,34 +9,12 @@ export default new Router({
     {
 		path: '/',
 		name: 'home',
-		components: {
-			navigation: () => import('@/components/navigation/nav_home'),
-			content: () => import('@/components/content/content_home')
-		}
+		component: () => import('@/views/home.vue')
 	},
 	{
 		path: '/create',
 		name: 'create',
-		components: {
-			navigation: () => import('@/components/navigation/nav_create'),
-			create: () => import('@/components/ThreeScene'),
-		}
-	},
-	{
-		path: '/taarten',
-		name: 'taarten',
-		components: {
-			navigation: () => import('@/components/navigation/nav_taarten') ,
-			content: () => import('@/components/content/content_taarten')
-		}
-	},
-	{
-		path: '/gallerij',
-		name: 'gallerij',
-		components: {
-			navigation: () => import('@/components/navigation/nav_gallerij') ,
-			content: () => import('@/components/content/content_gallerij')
-		}
+		component: () => import('@/views/create.vue')
 	},
   ]
 })

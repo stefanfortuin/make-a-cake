@@ -1,0 +1,17 @@
+.button-create{
+	position: absolute;
+	bottom: 40px;
+	right: 28px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: $light-green;
+
+	.plus{
+		width: 16px;
+		height: 16px;
+	}
+}

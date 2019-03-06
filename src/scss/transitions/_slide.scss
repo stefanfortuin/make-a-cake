@@ -1,0 +1,14 @@
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition-duration: 0.25s;
+  transition-property: transform;
+  transition-timing-function: ease-in-out;
+  transform-origin: top;
+}
+
+.slide-down-enter{
+    transform: scaleY(0);
+}
+.slide-down-leave-active {
+  transform: scaleY(0);
+}

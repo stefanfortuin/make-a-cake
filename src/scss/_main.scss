@@ -2,10 +2,9 @@
 
 //transitions
 @import './transitions/fade';
-@import './transitions/content';
+@import './transitions/slide';
 
 //partials
 @import './partials/nav-bar';
-@import './partials/taarten';
+@import './partials/button-create';
 @import './partials/home';
-@import './partials/content-container';
