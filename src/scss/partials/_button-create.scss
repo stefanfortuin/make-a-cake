@@ -9,9 +9,16 @@
 	height: 40px;
 	border-radius: 50%;
 	background-color: $light-green;
+	z-index: 1;
 
-	.plus{
+	.image{
 		width: 16px;
 		height: 16px;
 	}
+}
+
+.button-create:active, .button-create:hover{
+	user-select: none;
+	cursor: pointer;
+	box-shadow: 0px 0px 16px $light-green;
 }

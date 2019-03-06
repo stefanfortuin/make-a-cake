@@ -1,0 +1,19 @@
+.option-button{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 12px;
+	width: auto;
+	padding: 4px;
+	margin: 4px;
+	color: white;
+	font-size: 12px;
+	border-radius: 25px;
+	background-color: $grey;
+}
+
+.option-button:active, .option-button:hover{
+	cursor: pointer;
+	user-select: none;
+	box-shadow: 0px 0px 10px $light-green;
+}

@@ -1,0 +1,17 @@
+.create-options{
+	position: absolute;
+	bottom: 44px;
+    right: 36px;
+	border: 2px solid $light-green;
+	border-radius: 25px;
+	width: 75%;
+	height: 28px;
+	z-index: 0;
+	
+	.options{
+		display: flex;
+		justify-content: flex-start;
+		flex-flow: row;
+		align-items: center;
+	}
+}
