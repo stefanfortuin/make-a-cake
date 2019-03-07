@@ -60,7 +60,7 @@ export default {
 		this.scene.add( ambient );
 
 		// this.loader = new FBXLoader();
-		this.cake = new Cake(5);
+		this.cake = new Cake();
 		this.cake.Layer();
 		this.scene.add(this.cake.mesh);
 

@@ -1,18 +1,22 @@
 import * as THREE from 'three';
-import Cake from './Cake';
+import TweenLite from 'gsap/TweenLite';
 
-const layer_height = 1;
-const radials = 22;
+
 const filling_height = 0.6;
 
-class Layer extends Cake{
-	constructor(){
-		super()
+export default class Layer{
+	constructor(size, index){
+
+		this.size = size;
+		this.index = index;
+		this.layer_height = 1;
+		this.radials = 22;
+		this.filling_height = 0.6;
 	}
 
 	create(){
-		let layer_geometry = new THREE.CylinderBufferGeometry(this.persons, this.persons, layer_height, radials);
-		layer_geometry.translate(0,layer_height/2,0);
+		let layer_geometry = new THREE.CylinderBufferGeometry(this.size, this.size, this.layer_height, this.radials);
+		layer_geometry.translate(0, this.layer_height/2,0);
 		let layer_material = new THREE.MeshLambertMaterial({color: 0xC9B59A});
 		let layer = new THREE.Mesh(layer_geometry, layer_material);
 
@@ -22,6 +26,9 @@ class Layer extends Cake{
 		TweenLite.to(layer.position, 1, {x: layer.position.x, y: layer_pos, z: layer.position.z});
 		return layer;
 	}
-}
 
-export default Layer;
+	LayerPosition(){
+		let layerPos = this.layer_height/2 + this.filling_height/2;
+		return this.index * (layerPos * 2);
+	}
+}

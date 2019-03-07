@@ -1,58 +1,36 @@
 import * as THREE from 'three';
 import TweenLite from 'gsap/TweenLite';
-// import Layer from './Layer';
-// import Filling from './Filling';
+import Layer from './Layer';
+import Filling from './Filling';
 
 const layer_height = 1;
-const radials = 22;
 const filling_height = 0.6;
 
-class Cake{
-	constructor(persons){
-		this.persons = persons;
+export default class Cake{
+	constructor(){
+		this.persons = 5; //default 5
 
 		this.mesh = new THREE.Object3D();
 	}
 
 	Layer(){
-		let layers = this.TotalLayers();
-		if (layers >= 5){
+		let index = this.TotalLayers();
+		if (index >= 5){
 			console.log("reached limit");
 			return;
 		}
 
-		if (layers != 0)
+		if (index != 0)
 			this.Filling();
 
-		// let layer = new Layer()
-		// this.mesh.add(layer.create());
-
-		let layer_geometry = new THREE.CylinderBufferGeometry(this.persons, this.persons, layer_height, radials);
-		layer_geometry.translate(0,layer_height/2,0);
-		let layer_material = new THREE.MeshLambertMaterial({color: 0xC9B59A});
-		let layer = new THREE.Mesh(layer_geometry, layer_material);
-
-		layer.name = "layer";
-		let layer_pos = this.LayerPosition();
-		layer.position.y = layer_pos + 10;
-		TweenLite.to(layer.position, 1, {x: layer.position.x, y: layer_pos, z: layer.position.z});
-		this.mesh.add(layer);
+		let layer = new Layer(this.persons, index);
+		this.mesh.add(layer.create());
 	}
 
 	Filling(){
-		// let filling = new Filling()
-		// this.mesh.add(filling.create())
-
-		let filling_geometry = new THREE.CylinderBufferGeometry(this.persons, this.persons, filling_height, radials);
-		filling_geometry.translate(0,layer_height/2,0);
-		let fliling_material = new THREE.MeshLambertMaterial({color: 0xff0000});
-		let filling = new THREE.Mesh(filling_geometry, fliling_material);
-		
-		filling.name = "filling";
-		let filling_pos = this.FillingPosition();
-		filling.position.y = filling_pos + 5;
-		TweenLite.to(filling.position, 1, {x: filling.position.x, y: filling_pos, z: filling.position.z});
-		this.mesh.add(filling);
+		let index = this.TotalLayers();
+		let filling = new Filling(this.persons, index);
+		this.mesh.add(filling.create());
 	}
 
 	Topping(){
@@ -81,20 +59,6 @@ class Cake{
 		this.mesh.children = cake.slice(0, end);
 	}
 
-	LayerPosition(){
-		let layers = this.TotalLayers();
-		if (layers == 0)
-			return 0
-
-		let layerPos = layer_height/2 + filling_height/2;
-		return layers * (layerPos * 2);
-	}
-
-	FillingPosition(){
-		let fillingPos = layer_height + filling_height;
-		return this.TotalLayers() * fillingPos - (fillingPos/2);
-	}
-
 	ToppingPosition(){
 		let layers = this.TotalLayers()
 		let fillings = this.TotalFillings();
@@ -104,22 +68,18 @@ class Cake{
 	}
 
 	TotalLayers(){
-		let layers = this.mesh.children.reduce((t,x) => { 
+		return this.mesh.children.reduce((t,x) => { 
 			if(x.name === "layer") 
 				t += 1
 			return t
 		}, 0)
-		return layers;
 	}
 
 	TotalFillings(){
-		let fillings = this.mesh.children.reduce((t,x) => { 
+		return this.mesh.children.reduce((t,x) => { 
 			if(x.name === "filling") 
 				t += 1
 			return t
 		}, 0)
-		return fillings;
 	}
-};
-
-export default Cake;
+}
