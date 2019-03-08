@@ -7,7 +7,7 @@
 		<div class="options" v-else>
 			<div class="option-button" @click="layer">Layer</div>
 			<div class="option-button">Decoration</div>
-			<div class="option-button">Topper</div>
+			<div class="option-button" @click="topping">Topper</div>
 		</div>
 	</div>
 </template>
@@ -22,6 +22,10 @@ export default {
 		},
 		layer(){
 			this.$root.$emit('addlayer');
+			this.close();
+		},
+		topping(){
+			this.$root.$emit('topping');
 			this.close();
 		},
 		close(){

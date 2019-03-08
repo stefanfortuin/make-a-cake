@@ -1,34 +1,29 @@
 import * as THREE from 'three';
 import TweenLite from 'gsap/TweenLite';
 
-
-const filling_height = 0.6;
-
-export default class Layer{
+export default class Layer extends THREE.Mesh{
 	constructor(size, index){
+		let geometry = new THREE.CylinderBufferGeometry(size, size, 1, 22);
+		let material = new THREE.MeshLambertMaterial({color: 0xC9B59A});
+		geometry.translate(0, 1/2,0);
+		super(geometry, material)
 
-		this.size = size;
 		this.index = index;
-		this.layer_height = 1;
-		this.radials = 22;
+		this.height = 1;
 		this.filling_height = 0.6;
+		this.name = "layer";
+
+		this.animate();
 	}
 
-	create(){
-		let layer_geometry = new THREE.CylinderBufferGeometry(this.size, this.size, this.layer_height, this.radials);
-		layer_geometry.translate(0, this.layer_height/2,0);
-		let layer_material = new THREE.MeshLambertMaterial({color: 0xC9B59A});
-		let layer = new THREE.Mesh(layer_geometry, layer_material);
-
-		layer.name = "layer";
-		let layer_pos = this.LayerPosition();
-		layer.position.y = layer_pos + 10;
-		TweenLite.to(layer.position, 1, {x: layer.position.x, y: layer_pos, z: layer.position.z});
-		return layer;
+	animate(){
+		let animate_pos = this.LayerPosition();
+		this.position.y = animate_pos + 10;
+		TweenLite.to(this.position, 1, {x: this.position.x, y: animate_pos, z: this.position.z});
 	}
 
 	LayerPosition(){
-		let layerPos = this.layer_height/2 + this.filling_height/2;
+		let layerPos = this.height/2 + this.filling_height/2;
 		return this.index * (layerPos * 2);
 	}
 }

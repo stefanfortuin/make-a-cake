@@ -62,7 +62,7 @@ export default {
 		// this.loader = new FBXLoader();
 		this.cake = new Cake();
 		this.cake.Layer();
-		this.scene.add(this.cake.mesh);
+		this.scene.add(this.cake);
 
         this.renderer = new THREE.WebGLRenderer({antialias: true, aplha: true});
 		this.renderer.shadowMap.enabled = true;

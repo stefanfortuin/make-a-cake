@@ -2,7 +2,9 @@
   <div id="app">
     <nav-bar></nav-bar>
     <transition name="fade" mode="out-in">
-      <router-view></router-view>
+		<keep-alive>
+      		<router-view></router-view>
+	  	</keep-alive>
     </transition>
 	<button-create></button-create>
   </div>
