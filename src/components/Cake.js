@@ -3,9 +3,6 @@ import Layer from './Layer';
 import Filling from './Filling';
 import Topping from './Topping';
 
-const layer_height = 1;
-const filling_height = 0.6;
-
 export default class Cake extends THREE.Object3D{
 	constructor(){
 		super()
@@ -54,7 +51,6 @@ export default class Cake extends THREE.Object3D{
 
 	Height(){
 		return this.children.reduce((t,x) => {
-			console.log(x);
 			return t += x.height;
 		}, 0);
 	}
