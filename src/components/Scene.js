@@ -14,8 +14,7 @@ export default class Scene extends THREE.Scene {
 
 		this.cake = new Cake();
 		this.cake.Layer();
-		this.children.push(this.cake);
-		console.log(this);
+		this.add(this.cake);
 	}
 
 	init() {
@@ -46,10 +45,10 @@ export default class Scene extends THREE.Scene {
 		hemisphere.shadow.camera.right = 500;
 		hemisphere.shadow.camera.top = 500;
 		hemisphere.castShadow = true;
-		this.children.push(hemisphere);
+		this.add(hemisphere);
 
 		var ambient = new THREE.AmbientLight(0x404040); // soft white light
-		this.children.push(ambient);
+		this.add(ambient);
 
 		// this.loader = new FBXLoader();
 
@@ -69,7 +68,7 @@ export default class Scene extends THREE.Scene {
 		this.renderer.render(this, this.camera);
 	}
 
-	add(object){
+	insert(object){
 		switch (object) {
 			case "layer":
 				console.log(this.cake);

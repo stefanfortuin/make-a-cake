@@ -18,13 +18,13 @@ export default {
   mounted() {
     this.scene = new Scene();
     this.$root.$on('addlayer', () => {
-      this.scene.add("layer")
+      this.scene.insert("layer")
     })
     this.$root.$on('dellayer', () => {
       this.scene.remove("layer")
     })
     this.$root.$on('topping', () => {
-      this.scene.add("topping")
+      this.scene.insert("topping")
     })
   }
 }
