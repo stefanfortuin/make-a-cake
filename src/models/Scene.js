@@ -6,19 +6,12 @@ var OrbitControls = require('three-orbit-controls')(THREE)
 export default class Scene extends THREE.Scene {
 	constructor() {
 		super();
-		
-		
-
 		this.init();
 		this.animate();
-
-		this.cake = new Cake();
-		this.cake.Layer();
-		this.add(this.cake);
 	}
 
 	init() {
-		let container = document.getElementById('container');
+		let container = document.getElementById('container-3d');
 
 		this.camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.01, 6000);
 		this.camera.position.z = 10;
@@ -68,19 +61,8 @@ export default class Scene extends THREE.Scene {
 		this.renderer.render(this, this.camera);
 	}
 
-	insert(object){
-		switch (object) {
-			case "layer":
-				console.log(this.cake);
-				this.cake.Layer();
-				break;
-			case "topping":
-				this.cake.Topping();
-				break;
-			default:
-				break;
-		}
-
+	find(object){
+		return this.children.find(c => c instanceof object)
 	}
 
 	// loadObject(name) {

@@ -41,6 +41,10 @@ export default class Cake extends THREE.Object3D{
 		this.children = cake.slice(0, end);
 	}
 
+	DeleteTopping(){
+		this.children.pop();
+	}
+
 	TotalOf(type){
 		return this.children.reduce((t,x) => { 
 			if(x.name === type) 

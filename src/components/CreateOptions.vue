@@ -2,7 +2,6 @@
 	<div class="create-options">
 		<div class="options" v-if="!creating">
 			<div class="option-button" @click="create">Cake</div>
-			<div class="option-button">Cupcake</div>
 		</div>
 		<div class="options" v-else>
 			<div class="option-button" @click="layer">Layer</div>
@@ -13,19 +12,29 @@
 </template>
 
 <script>
+import CakeCommand from '../commands/CakeCommand';
+import LayerCommand from '../commands/LayerCommand';
+import ToppingCommand from '../commands/ToppingCommand';
+import { mapGetters } from 'vuex';
+
 export default {
 	name: "create-options",
+	computed: {
+		...mapGetters({
+			cmd_mngr: "getCommandManager",
+		})
+	},
 	methods:{
 		create(){
 			this.$router.push({path: '/create'});
 			this.close();
 		},
 		layer(){
-			this.$root.$emit('addlayer');
+			this.$store.getters.getCommandManager.Execute(new LayerCommand(5));
 			this.close();
 		},
 		topping(){
-			this.$root.$emit('topping');
+			this.$store.getters.getCommandManager.Execute(new ToppingCommand());
 			this.close();
 		},
 		close(){

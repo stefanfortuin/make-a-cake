@@ -36,6 +36,7 @@ export default {
 
 body {
   margin: 0;
+  overscroll-behavior: none;
   touch-action: manipulation;
 }
 

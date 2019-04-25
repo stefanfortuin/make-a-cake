@@ -1,23 +1,37 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import Scene from './models/Scene';
+import CommandManager from './models/CommandManager';
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-	  currentObject: null
+	  Scene: null,
+	  CommandManager: null,
   },
   mutations: {
-	  changeObject(state, object){
-		  state.currentObject = object;
-	  }
+		init(state){
+			state.Scene = new Scene();
+			state.CommandManager = new CommandManager();
+		}
   },
   actions: {
-
+	  init({state,commit}){
+			return new Promise((resolve, reject) => {
+				commit("init");
+				resolve()
+			})
+		},
   },
   getters: {
-	  currentObject: state => {
-		  return state.currentObject;
+	  getScene: state => {
+		  return state.Scene;
+	  },
+
+	  getCommandManager: state => {
+		  return state.CommandManager;
 	  }
   }
 })
