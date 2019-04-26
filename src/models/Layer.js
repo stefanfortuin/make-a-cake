@@ -3,17 +3,32 @@ import TweenLite from 'gsap/TweenLite';
 
 export default class Layer extends THREE.Mesh{
 	constructor(size, index){
-		let geometry = new THREE.CylinderBufferGeometry(size, size, 1, 22);
+		let geometry = new THREE.CylinderBufferGeometry(1, 1, 1, 22);
 		let material = new THREE.MeshLambertMaterial({color: 0xC9B59A});
-		geometry.translate(0, 1/2,0);
+		geometry.translate(0,1/2,0);
 		super(geometry, material)
 
-		this.index = index;
-		this.height = 1;
-		this.filling_height = 0.6;
+		this._index = index;
+		this._size = size;
+		this._height = 1;
+		this._filling_height = 0.6;
 		this.name = "layer";
 
 		this.animate();
+	}
+
+	bigger(){
+		this.scale.x += 1;
+		this.scale.z += 1;
+	}
+
+	smaller(){
+		this.scale.x -= 1;
+		this.scale.z -= 1;
+	}
+
+	get size(){
+		return this._size;
 	}
 
 	animate(){
@@ -23,7 +38,7 @@ export default class Layer extends THREE.Mesh{
 	}
 
 	LayerPosition(){
-		let layerPos = this.height/2 + this.filling_height/2;
-		return this.index * (layerPos * 2);
+		let layerPos = this._height/2 + this._filling_height/2;
+		return this._index * (layerPos * 2);
 	}
 }

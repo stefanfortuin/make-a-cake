@@ -9,24 +9,6 @@ export default class Cake extends THREE.Object3D{
 		this.persons = 5; //default 5
 	}
 
-	Layer(){
-		let index = this.TotalOf("layer");
-		if (index >= 5){
-			console.log("reached limit");
-			return;
-		}
-
-		if (index != 0)
-			this.Filling();
-
-		this.add(new Layer(this.persons, index));
-	}
-
-	Filling(){
-		let index = this.TotalOf("layer");
-		this.add(new Filling(this.persons, index));
-	}
-
 	Topping(){
 		let height = this.Height();
 		this.add(new Topping(height, this.persons))

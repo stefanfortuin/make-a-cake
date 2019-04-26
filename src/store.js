@@ -10,15 +10,20 @@ export default new Vuex.Store({
   state: {
 	  Scene: null,
 	  CommandManager: null,
+	  SelectedObject: null,
   },
   mutations: {
 		init(state){
 			state.Scene = new Scene();
 			state.CommandManager = new CommandManager();
+		},
+
+		setSelectedObject(state, object){
+			state.SelectedObject = object;
 		}
   },
   actions: {
-	  init({state,commit}){
+	  	init({state,commit}){
 			return new Promise((resolve, reject) => {
 				commit("init");
 				resolve()
@@ -32,6 +37,10 @@ export default new Vuex.Store({
 
 	  getCommandManager: state => {
 		  return state.CommandManager;
+	  },
+
+	  getSelectedObject: state => {
+		  return state.SelectedObject;
 	  }
   }
 })

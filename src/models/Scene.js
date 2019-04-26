@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import store from '../store';
 import Cake from './Cake';
 // import FBXLoader from 'three-fbxloader-offical'
 var OrbitControls = require('three-orbit-controls')(THREE)
@@ -52,6 +53,13 @@ export default class Scene extends THREE.Scene {
 
 		this.renderer.shadowMap.enabled = true;
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
+
+		this.raycaster = { x : 0, y : 0 };
+		this.mouse = { x : 0, y : 0 };
+
+		this.raycaster = new THREE.Raycaster();
+    	this.renderer.domElement.addEventListener( 'click', this.raycast, false );
+
 		container.appendChild(this.renderer.domElement);
 	}
 
@@ -59,10 +67,29 @@ export default class Scene extends THREE.Scene {
 		requestAnimationFrame(this.animate)
 		this.controls.update();
 		this.renderer.render(this, this.camera);
+		
 	}
 
-	find(object){
+	find = (object) => {
 		return this.children.find(c => c instanceof object)
+	}
+
+	raycast = (e) => {
+		this.mouse.x = ( e.clientX / window.innerWidth ) * 2 - 1;
+    	this.mouse.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
+
+		this.raycaster.setFromCamera( this.mouse, this.camera );   
+
+
+		let intersects = this.raycaster.intersectObjects( this.children, true );
+
+		if (intersects.length > 0){
+			let object = intersects[0].object;
+			store.state.SelectedObject = object;
+		}
+		else{
+			store.state.SelectedObject = null;
+		}
 	}
 
 	// loadObject(name) {
