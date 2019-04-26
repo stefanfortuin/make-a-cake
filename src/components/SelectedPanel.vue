@@ -6,6 +6,7 @@
 			<div class="option" @click="changeOption(2)">Size</div>
 		</div>
 		<div class="changes">
+			<color v-if="option == 1" :object="object"></color>
 			<size v-if="option == 2" :object="object"></size>
 		</div>
 	</div>
@@ -13,6 +14,7 @@
 
 <script>
 import Size from './options/OptionSize';
+import Color from './options/OptionColor';
 
 export default {
 	data(){
@@ -22,6 +24,7 @@ export default {
 	},
 	components: {
 		Size,
+		Color,
 	},
 	props:{
 		object:{
@@ -32,7 +35,6 @@ export default {
 	methods:{
 		changeOption(option){
 			this.option = option;
-			console.log(this.option)
 		}
 	}
 }
