@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@radial-color-picker/vue-color-picker": "^2.1.0",
+    "three-outlinepass": "^1.0.7",
     "vue": "^2.6.8",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
@@ -17,7 +18,7 @@
     "@vue/cli-service": "^3.6.0",
     "compression-webpack-plugin": "^2.0.0",
     "gsap": "^2.1.2",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.12.0",
     "sass-loader": "^7.0.1",
     "three": "^0.100.0",
     "three-fbx-loader": "^1.0.3",

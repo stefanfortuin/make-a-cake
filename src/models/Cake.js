@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import Topping from './Topping';
+import Layer from './Layer';
+import Filling from './Filling';
 
 export default class Cake extends THREE.Object3D{
 	constructor(){
@@ -12,10 +14,17 @@ export default class Cake extends THREE.Object3D{
 		this.add(new Topping(height, this.persons))
 	}
 
-	findLayerFilling(index){
-		let new_index = index - 1
-		if (new_index < 0) return;
-		return this.children[index - 1]
+	findLayerOrFilling(object){
+		if (object instanceof Layer){
+			let object_index = this.children.indexOf(object);
+			if (object_index - 1 < 0) return null;
+
+			return this.children[object_index - 1];
+		}
+		if (object instanceof Filling){
+			let object_index = this.children.indexOf(object);
+			return this.children[object_index + 1];
+		}
 	}
 
 	DeleteLayer(){
