@@ -5,11 +5,13 @@
 			<div class="option" @click="changeOption(1)">Color</div>
 			<div class="option" @click="changeOption(2)">Size</div>
 			<div class="option" @click="changeOption(3)">Shape</div>
+			<div class="option" @click="changeOption(4)">Rotate</div>
 		</div>
 		<div class="changes">
 			<color v-if="option == 1" :object="object"></color>
 			<size v-if="option == 2" :object="object"></size>
 			<shape v-if="option == 3" :object="object"></shape>
+			<rotate v-if="option == 4" :object="object"></rotate>
 		</div>
 	</div>
 </template>
@@ -18,6 +20,7 @@
 import Size from './options/OptionSize';
 import Color from './options/OptionColor';
 import Shape from './options/OptionShape';
+import Rotate from './options/OptionRotate';
 
 export default {
 	data(){
@@ -29,6 +32,7 @@ export default {
 		Size,
 		Color,
 		Shape,
+		Rotate,
 	},
 	props:{
 		object:{

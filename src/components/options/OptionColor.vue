@@ -1,18 +1,18 @@
 <template>
-	<div class="option-color" :style="{backgroundColor: 'hsl(' + hue + ',' + sat + '%,' + light + '%)'}">
+	<div class="option-with-slider" :style="{backgroundColor: 'hsl(' + hue + ',' + sat + '%,' + light + '%)'}">
 		<div class="slider">
 			<span>Hue</span>
-			<input  type="range" min="0" max="360" value="50" v-model="hue" />
+			<input  type="range" min="0" max="360" v-model="hue" />
 		</div>
 		<div class="slider">
 			<span>Saturation</span>
-			<input type="range" min="0" max="100" value="100" v-model="sat">
+			<input type="range" min="0" max="100" v-model="sat">
 		</div>
 		<div class="slider">
 			<span>Lightness</span>
-			<input type="range" min="0" max="100" value="50" v-model="light">
+			<input type="range" min="0" max="100" v-model="light">
 		</div>
-		<div class="set-color" @click="set">Set Color</div>
+		<div class="set" @click="set">Set Color</div>
 	</div>
 </template>
 
