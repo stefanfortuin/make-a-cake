@@ -5,7 +5,7 @@ export default class Layer extends THREE.Mesh{
 	constructor(size, index){
 		let geometry = new THREE.CylinderBufferGeometry(1, 1, 1, 22);
 		let material = new THREE.MeshLambertMaterial({color: 0xC9B59A});
-		geometry.translate(0,1/2,0);
+		geometry.translate(0,0.5,0);
 		super(geometry, material)
 
 		this._index = index;

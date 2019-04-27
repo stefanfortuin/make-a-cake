@@ -5,6 +5,9 @@ export default class CommandManager{
 	}
 
 	Execute(command){
+		if (this.redo_stack.length > 0)
+			this.redo_stack = [];
+
 		this.undo_stack.push(command);
 		command.Execute();
 	}

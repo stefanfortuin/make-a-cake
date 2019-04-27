@@ -51,32 +51,8 @@ export default class Scene extends THREE.Scene {
 			aplha: true
 		});
 
-		// this.composer = new EffectComposer(this.renderer);
-		// this.renderPass = new RenderPass(this, this.camera);
-		
-		// this.outlinePass = new OutlinePass(new THREE.Vector2( window.innerWidth, window.innerHeight ), this, this.camera);
-		// this.outlinePass.renderToScreen = true;
-
-		// this.composer.addPass(this.renderPass);
-		// this.composer.addPass(this.outlinePass);
-
-		// let params = {
-		// 	edgeStrength: 2,
-		// 	edgeGlow: 1,
-		// 	edgeThickness: 1.0,
-		// 	pulsePeriod: 2,
-		// 	usePatternTexture: false
-		// };
-
-		// this.outlinePass.edgeStrength = params.edgeStrength;
-		// this.outlinePass.edgeGlow = params.edgeGlow;
-		// this.outlinePass.pulsePeriod = params.pulsePeriod;
-		// this.outlinePass.visibleEdgeColor.set(0xb62121);
-		// this.outlinePass.hiddenEdgeColor.set(0xffffff);
-
 		this.renderer.shadowMap.enabled = true;
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
-		// this.composer.setSize(window.innerWidth, window.innerHeight);
 
 		this.raycaster = { x : 0, y : 0 };
 		this.mouse = { x : 0, y : 0 };
@@ -90,7 +66,6 @@ export default class Scene extends THREE.Scene {
 	animate = () => {
 		requestAnimationFrame(this.animate)
 		this.controls.update();
-		// this.composer.render(this, this.camera);
 		this.renderer.render(this, this.camera);
 	}
 
@@ -108,12 +83,14 @@ export default class Scene extends THREE.Scene {
 
 		if (intersects.length > 0){
 			let object = intersects[0].object;
+			this.children[2].displaySelection(object);
 			store.state.SelectedObject = object;
-			// this.outlinePass.selectedObjects = [object];
+			this.controls.enabled = false;
 		}
 		else{
 			store.state.SelectedObject = null;
-			// this.outlinePass.selectedObjects = [];
+			this.controls.enabled = true;
+			this.children[2].reverseSelection();
 		}
 	}
 

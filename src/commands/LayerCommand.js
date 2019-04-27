@@ -17,11 +17,15 @@ export default class LayerCommand{
 		}
 
 		if (index != 0){
-			this._filling = new Filling(this._size, index);
+			if (!this._filling)
+				this._filling = new Filling(this._size, index);
+				
 			this._cake.add(this._filling);
 		}
 
-		this._layer = new Layer(this._size, index);
+		if (!this._layer)
+			this._layer = new Layer(this._size, index);
+
 		this._cake.add(this._layer);
 	}
 
