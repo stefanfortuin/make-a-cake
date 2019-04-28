@@ -2,8 +2,7 @@
 	<div class="selected-panel">
 		<div class="options">
 			<div class="info">
-				<span>{{object.name}}</span> 
-				<img src="@/assets/delete.svg" @click="del()">
+				<span>{{object.name}}</span>
 			</div>
 
 			<div class="option" @click="changeOption(1)">Color</div>
@@ -21,12 +20,10 @@
 </template>
 
 <script>
-import DeleteCommand from '@/commands/DeleteCommand';
 import Size from './options/OptionSize';
 import Color from './options/OptionColor';
 import Shape from './options/OptionShape';
 import Rotate from './options/OptionRotate';
-import Cake from '../models/Cake';
 
 export default {
 	data(){
@@ -50,18 +47,6 @@ export default {
 		changeOption(option){
 			this.option = option;
 		},
-
-		del(){
-			let cake = this.$store.getters.getScene.find(Cake);
-			let index = cake.indexOf(this.object);
-			if (index == 0 && cake.children.length > 1){
-				console.error("can't delete base layer, when there are things on top of it");
-				return;
-			}
-
-			this.$store.getters.getCommandManager.Execute(new DeleteCommand(this.object));
-			this.$store.state.SelectedObject = null;
-		}
 	}
 }
 </script>
