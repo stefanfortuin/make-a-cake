@@ -19,7 +19,6 @@ export default class DeleteCommand{
 
 	Undo(){
 		if (!this._HasLowered){
-			console.log("lowering")
 			this._HasLowered = true;
 			for (let i = 0; i < this._oldLayer.length; i++) {
 				this._oldLayer[i].position.y -= 2;

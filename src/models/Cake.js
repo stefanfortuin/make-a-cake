@@ -16,6 +16,10 @@ export default class Cake extends THREE.Object3D{
 		this.add(new Topping(height, this.persons))
 	}
 
+	indexOf(object){
+		return this.children.indexOf(object);
+	}
+
 	findLayerOrFilling(object){
 		if (object instanceof Layer){
 			let object_index = this.children.indexOf(object);
