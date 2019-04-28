@@ -38,7 +38,11 @@ export default class Cake extends THREE.Object3D{
 		this._animations = [];
 	}
 
-	displaySelection = (object) => {
+	displaySelection = (object, wait) => {
+		if (wait){
+			setTimeout(() => { this.displaySelection(object) }, 400);
+			return;
+		}
 
 		let object_index = this.children.indexOf(object);
 		let child = this.findLayerOrFilling(object);
@@ -64,7 +68,7 @@ export default class Cake extends THREE.Object3D{
 	}
 
 	animation = (object, increase) => {
-		let tween = TweenLite.to(object.position,0.6 , {x: object.position.x, y: object.position.y + increase, z: object.position.z})
+		let tween = TweenLite.to(object.position,0.35 , {x: object.position.x, y: object.position.y + increase, z: object.position.z})
 		return tween
 	}
 

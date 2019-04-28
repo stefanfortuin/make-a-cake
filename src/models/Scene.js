@@ -83,7 +83,13 @@ export default class Scene extends THREE.Scene {
 
 		if (intersects.length > 0){
 			let object = intersects[0].object;
-			this.children[2].displaySelection(object);
+			this.children[2].reverseSelection();
+			
+			if (store.state.SelectedObject == null)
+				this.children[2].displaySelection(object);
+			else
+				this.children[2].displaySelection(object, true);
+
 			store.state.SelectedObject = object;
 			this.controls.enabled = false;
 		}
