@@ -12,12 +12,14 @@
 <script>
 import RotateCommand from '@/commands/RotateCommand';
 import * as THREE from 'three'
+import Cake from '@/models/Cake';
 
 export default {
 	data(){
 		return{
 			y: 0,
 			oldRotation: null,
+			child: null,
 		};
 	},
 	props:{
@@ -28,7 +30,11 @@ export default {
 	},
 	methods: {
 		change(){
-			this.object.setRotationFromEuler(new THREE.Euler(0, this.radians(this.y), 0));
+			let rotation = new THREE.Euler(0, this.radians(this.y), 0);
+			if(this.child != null)
+				this.child.setRotationFromEuler(rotation);
+
+			this.object.setRotationFromEuler(rotation);
 		},
 
 		set(){
@@ -45,6 +51,7 @@ export default {
 		}
 	},
 	created(){ 
+		this.child = this.$store.getters.getScene.find(Cake).findLayerOrFilling(this.object); 
 		this.y = this.deg(this.object.rotation.y);
 		this.oldRotation = new THREE.Euler(this.object.rotation.x, this.object.rotation.y, this.object.rotation.z);
 	}
