@@ -9,16 +9,10 @@
 	border-radius: 25px 25px 0px 0px;
 	z-index: 2;
 
-	.title{
-		font-family: $main-font;
-		position: absolute;
-		left: 20px;
-		top: 5px;
-		text-transform: capitalize;
-		font-weight: bold;
-	}
+	
 
 	.options{
+		position: relative;
 		display:flex;
 		justify-content: center;
 		align-items: center;
@@ -27,6 +21,27 @@
 		height: 100%;
 		border-top-left-radius: 25px;
 		background-color: white;
+
+		.info{
+			font-family: $main-font;
+			position: absolute;
+			display: flex;
+			justify-content: space-between;
+			width: 80%;
+			height: 15px;
+			left: 20px;
+			top: 5px;
+			text-transform: capitalize;
+			font-weight: bold;
+
+			span{
+				width: 50%;
+			}
+
+			img{
+				width: 50%;
+			}
+		}
 
 		.option{
 			display: flex;

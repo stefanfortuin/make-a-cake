@@ -1,7 +1,11 @@
 <template>
 	<div class="selected-panel">
-		<span class="title">{{object.name}}</span>
 		<div class="options">
+			<div class="info">
+				<span>{{object.name}}</span> 
+				<img src="@/assets/delete.svg" @click="del()">
+			</div>
+
 			<div class="option" @click="changeOption(1)">Color</div>
 			<div class="option" @click="changeOption(2)">Size</div>
 			<div class="option" @click="changeOption(3)">Shape</div>
@@ -17,6 +21,7 @@
 </template>
 
 <script>
+import DeleteCommand from '@/commands/DeleteCommand';
 import Size from './options/OptionSize';
 import Color from './options/OptionColor';
 import Shape from './options/OptionShape';
@@ -43,6 +48,11 @@ export default {
 	methods:{
 		changeOption(option){
 			this.option = option;
+		},
+
+		del(){
+			this.$store.getters.getCommandManager.Execute(new DeleteCommand(this.object));
+			this.$store.state.SelectedObject = null;
 		}
 	}
 }

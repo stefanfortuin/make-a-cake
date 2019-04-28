@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import Topping from './Topping';
 import Layer from './Layer';
 import Filling from './Filling';
+import { TweenLite } from 'gsap';
 
 export default class Cake extends THREE.Object3D{
 	constructor(){
@@ -28,6 +29,18 @@ export default class Cake extends THREE.Object3D{
 		}
 	}
 
+	insertAt = (start_index, layer) => {
+		for (let i = start_index; i < this.children.length; i++) {
+			var o = this.children[i];
+			o.position.y += 1.6;
+		}
+
+		for (let i = 0; i < layer.length; i++) {
+			this.children.splice(start_index + i, 0, layer[i]);
+		}
+		
+	}
+
 	reverseSelection = () => {
 		if (this._animations.length == 0) return;
 
@@ -35,6 +48,34 @@ export default class Cake extends THREE.Object3D{
 			var tween = this._animations[i];
 			tween.reverse();
 		}
+		this._animations = [];
+	}
+
+	reverseFromRedo = (start_index) => {
+		for (let i = start_index; i < this.children.length; i++) {
+			var o = this.children[i];
+			o.position.y -= 1.6;
+		}
+	}
+
+	reverseFromDeleteSelection = (delete_amount) => {
+		if (this._animations.length == 0) return;
+		if (this._above_objects.length == 0) return;
+		if (this._above_objects.length != this._animations.length - 2) return;
+
+		let lower_amount = 1;
+		if (delete_amount == 2) lower_amount += 0.6;
+
+		//for each above not selected objects get the original position
+		//lower the original y position with the lower_amount determined by how many objects have been deleted
+		//tween from the current position to the new pos that lowered y position to fill the gap;
+		for (let i = 0; i < this._above_objects_start_pos.length; i++) {
+			var orig_pos = this._above_objects_start_pos[i];
+			var tween = this._animations[i + 2];
+			var to_pos = {x: orig_pos.x, y: orig_pos.y -= lower_amount, z: orig_pos.z}
+			TweenLite.to(tween.target, 0.35, to_pos);
+		}
+
 		this._animations = [];
 	}
 
@@ -53,15 +94,23 @@ export default class Cake extends THREE.Object3D{
 		else
 			start = object_index + 1;
 
-		let above_objects = this.children.slice(start, this.children.length)
+		this._above_objects = this.children.slice(start, this.children.length)
+		this._above_objects_start_pos = []
+
+		for (let i = 0; i < this._above_objects.length; i++) {
+			var o = this._above_objects[i]
+			var position = {x: o.position.x, y: o.position.y, z: o.position.z}
+			this._above_objects_start_pos.push(position);
+		}
+
 		this._animations.push(this.animation(object, 2));
 
 		if(child != null)
 			this._animations.push(this.animation(child, 2));
 
-		if(above_objects.length > 0){
-			for (let i = 0; i < above_objects.length; i++) {
-				var o = above_objects[i];
+		if(this._above_objects.length > 0){
+			for (let i = 0; i < this._above_objects.length; i++) {
+				var o = this._above_objects[i];
 				this._animations.push(this.animation(o, 4));
 			}
 		}

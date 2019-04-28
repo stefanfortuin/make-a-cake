@@ -24,7 +24,7 @@ export default class CommandManager{
 		if(this.redo_stack.length <= 0) return;
 
 		let command = this.redo_stack.pop();
-		command.Execute();
+		command.Redo();
 		this.undo_stack.push(command)
 	}
 
