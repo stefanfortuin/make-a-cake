@@ -35,14 +35,25 @@ export default class ShapeCommand{
 		this.Execute();
 	}
 
-	newGeometry(object, geometry){
+	newGeometry(object, geom_type){
 		let height = 1;
 		if (object instanceof Filling)
 			height = 0.6;
 
-		let geom = (geometry == "round")
-		? new THREE.CylinderBufferGeometry(1, 1, height, 22)
-		: new THREE.BoxBufferGeometry(2,height,2)
+		let geom;
+		switch (geom_type) {
+			case "round":
+				geom = new THREE.CylinderBufferGeometry(1, 1, height, 22)
+				break;
+			case "rect":
+				geom = new THREE.BoxBufferGeometry(2, height, 2);
+				break;
+			case "triangle":
+				geom = new THREE.CylinderBufferGeometry(1, 1, height, 3);
+				break;
+			default:
+				break;
+		}
 
 		geom.translate(0, 0.5, 0);
 		return geom;

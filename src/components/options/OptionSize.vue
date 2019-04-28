@@ -1,7 +1,7 @@
 <template>
 	<div class="option-size">
-		<img @click="bigger" src="@/assets/size.svg">
-		<img @click="smaller" src="@/assets/size.svg" style="transform: rotateX(180deg)">
+		<img @click="bigger" src="@/assets/triangle.svg">
+		<img @click="smaller" src="@/assets/triangle.svg" style="transform: rotateX(180deg)">
 	</div>
 </template>
 
