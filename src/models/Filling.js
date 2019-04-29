@@ -31,10 +31,14 @@ export default class Filling extends THREE.Mesh{
 		return this._size;
 	}
 
+	get isAnimating(){
+		return this._tween.isActive();
+	}
+
 	animate(){
 		let animate_pos = this.FillingPosition();
 		this.position.y = animate_pos + 5;
-		TweenLite.to(this.position, 1, {x: this.position.x, y: animate_pos, z: this.position.z});
+		this._tween = TweenLite.to(this.position, 1, {x: this.position.x, y: animate_pos, z: this.position.z});
 	}
 
 	FillingPosition(){

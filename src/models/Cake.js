@@ -20,6 +20,18 @@ export default class Cake extends THREE.Object3D{
 		return this.children.indexOf(object);
 	}
 
+	isAnimating(){
+		let animating = false;
+		for (let i = 0; i < this.children.length; i++) {
+			var o = this.children[i];
+			if (o.isAnimating){
+				animating = true;
+				break;
+			}
+		}
+		return animating;
+	}
+
 	findLayerOrFilling(object){
 		if (object instanceof Layer){
 			let object_index = this.children.indexOf(object);

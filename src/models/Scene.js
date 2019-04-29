@@ -80,15 +80,18 @@ export default class Scene extends THREE.Scene {
 		this.raycaster.setFromCamera( this.mouse, this.camera );   
 
 		let intersects = this.raycaster.intersectObjects( this.children, true );
+		let cake = this.children[2];
+
+		if(cake.isAnimating()) return;
 
 		if (intersects.length > 0){
 			let object = intersects[0].object;
-			this.children[2].reverseSelection();
+			cake.reverseSelection();
 			
 			if (store.state.SelectedObject == null)
-				this.children[2].displaySelection(object);
+				cake.displaySelection(object);
 			else
-				this.children[2].displaySelection(object, true);
+				cake.displaySelection(object, true);
 
 			store.state.SelectedObject = object;
 			this.controls.enabled = false;
@@ -96,7 +99,7 @@ export default class Scene extends THREE.Scene {
 		else{
 			store.state.SelectedObject = null;
 			this.controls.enabled = true;
-			this.children[2].reverseSelection();
+			cake.reverseSelection();
 		}
 	}
 

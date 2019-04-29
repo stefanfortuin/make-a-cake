@@ -1,12 +1,15 @@
 <template>
 	<div class="create">
-		<div class="commandbuttons" v-if="selected == null">
-			<img class="undo" @click="undo" src="@/assets/undo.svg"/>
-			<img class="redo" @click="redo" src="@/assets/redo.svg"/>
-		</div>
-		<div class="delete" v-else>
-			<img src="@/assets/delete.svg" @click="del()">
-		</div>
+		<transition-group name="fade" mode="out-in">
+			<div class="commandbuttons" v-if="selected == null" :key="'cmd'">
+				<img class="undo" @click="undo" src="@/assets/undo.svg"/>
+				<img class="redo" @click="redo" src="@/assets/redo.svg"/>
+			</div>
+			<div class="delete" v-else :key="'del'">
+				<img src="@/assets/delete.svg" @click="del()">
+			</div>
+		</transition-group>
+		
 		<div id="container-3d"></div>
 	</div>
 </template>
