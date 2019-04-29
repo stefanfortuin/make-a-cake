@@ -1,16 +1,17 @@
 <template>
 	<div class="selected-panel">
-		<div class="options">
+		<div class="left">
 			<div class="info">
 				<span>{{object.name}}</span>
 			</div>
-
-			<div class="option" @click="changeOption(1)">Color</div>
-			<div class="option" @click="changeOption(2)">Size</div>
-			<div class="option" @click="changeOption(3)">Shape</div>
-			<div class="option" @click="changeOption(4)">Rotate</div>
+			<div class="options">
+				<div class="option" @click="changeOption(1)"><img src="@/assets/option_color.svg" alt=""></div>
+				<div class="option" @click="changeOption(2)"><img src="@/assets/option_size.svg" alt=""></div>
+				<div class="option" @click="changeOption(3)"><img src="@/assets/option_shape.svg" alt=""></div>
+				<div class="option" @click="changeOption(4)"><img src="@/assets/option_rotate.svg" alt=""></div>
+			</div>
 		</div>
-		<div class="changes">
+		<div class="right">
 			<color v-if="option == 1" :object="object"></color>
 			<size v-if="option == 2" :object="object"></size>
 			<shape v-if="option == 3" :object="object"></shape>
