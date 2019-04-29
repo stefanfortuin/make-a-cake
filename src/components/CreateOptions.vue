@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import CakeCommand from '../commands/CakeCommand';
 import LayerCommand from '../commands/LayerCommand';
 import ToppingCommand from '../commands/ToppingCommand';
 import { mapGetters } from 'vuex';

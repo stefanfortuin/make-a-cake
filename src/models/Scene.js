@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import store from '../store';
+import Hammer from 'hammerjs';
 // import { RenderPass, EffectComposer, OutlinePass } from "three-outlinepass";
 // import FBXLoader from 'three-fbxloader-offical'
 var OrbitControls = require('three-orbit-controls')(THREE)
@@ -13,6 +14,7 @@ export default class Scene extends THREE.Scene {
 
 	init() {
 		let container = document.getElementById('container-3d');
+		this._hammer = new Hammer(container);
 
 		this.camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.01, 6000);
 		this.camera.position.z = 10;
@@ -86,6 +88,8 @@ export default class Scene extends THREE.Scene {
 
 		if (intersects.length > 0){
 			let object = intersects[0].object;
+			if(object == store.state.SelectedObject) return;
+
 			cake.reverseSelection();
 			
 			if (store.state.SelectedObject == null)

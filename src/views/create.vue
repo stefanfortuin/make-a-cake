@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import CakeCommand from '@/commands/CakeCommand';
 import DeleteCommand from '@/commands/DeleteCommand';
 import Cake from '@/models/Cake';
 import { mapGetters } from 'vuex';
@@ -29,7 +28,7 @@ export default {
 	},
 	mounted(){
 		this.$store.dispatch("init").then(() => {
-			this.$store.getters.getCommandManager.Execute(new CakeCommand(5));
+			this.$store.getters.getScene.add(new Cake(5));
 		})
 	},
 	methods: {

@@ -8,10 +8,25 @@
 <script>
 import BiggerCommand from '@/commands/BiggerCommand';
 import SmallerCommand from '@/commands/SmallerCommand';
+import ScaleCommand from '@/commands/ScaleCommand';
 import Cake from '@/models/Cake';
 import Layer from '@/models/Layer';
+import { mapGetters } from 'vuex';
 
 export default {
+	data(){
+		return{
+			original_x: 0,
+			original_z: 0,
+			cake: null,
+			child: null,
+		}
+	},
+	computed:{
+		...mapGetters({
+			Scene: "getScene",
+		})
+	},
 	props: {
 		object: {
 			required: true,
@@ -19,22 +34,56 @@ export default {
 		}
 	},
 	methods: {
-		bigger(){
-			let cake = this.$store.getters.getScene.find(Cake)
-			let object_index = cake.indexOf(this.object);
+		pinchstart(e){
+			this.original_x = this.object.scale.x;
+			this.original_z = this.object.scale.z;
+		},
+
+		pinchmove(e){
+			this.object.scale.x = this.original_x * e.scale;
+			this.object.scale.z = this.original_z * e.scale;
+
+			if (this.child != null){
+				this.child.scale.x = this.object.scale.x;
+				this.child.scale.z = this.object.scale.z;
+			}
+
+			//set the current object scale to the object scale from that is under it if it exceeds it.
+			let object_below = this.getObjectBelow();
+			if(object_below != null && object_below.scale.x < this.object.scale.x + 0.05) {
+				this.object.scale.x = object_below.scale.x;
+				this.object.scale.z = object_below.scale.z;
+
+				if (this.child != null){
+					this.child.scale.x = this.object.scale.x;
+					this.child.scale.z = this.object.scale.z;
+				}
+			}
+		},
+
+		pinchend(e){
+			let scale = this.object.scale.x / this.original_x;
+			let original_scale = {x: this.original_x, z: this.original_z};
+			this.$store.getters.getCommandManager.Execute(new ScaleCommand(this.object, scale, original_scale));
+		},
+
+		getObjectBelow(){
+			let object_index = this.cake.indexOf(this.object);
 
 			if (object_index > 0){
 				let object_below;
 				(this.object instanceof Layer)
-				? object_below = cake.children[object_index - 2]
-				: object_below = cake.children[object_index - 1]
+				? object_below = this.cake.children[object_index - 2]
+				: object_below = this.cake.children[object_index - 1]
 
-				if(object_below.scale.x < this.object.scale.x + 1) {
-					console.error("can't exceed size of layer below");
-					return;
-				}
+				return object_below;
 			}
+			return null;
+		},
 
+		bigger(){
+			let object_below = this.getObjectBelow();
+			if(object_below != null && object_below.scale.x < this.object.scale.x + 1) return;
 			this.$store.getters.getCommandManager.Execute(new BiggerCommand(this.object))
 		},
 		smaller(){
@@ -43,7 +92,22 @@ export default {
 				return;
 			}
 			this.$store.getters.getCommandManager.Execute(new SmallerCommand(this.object))
+			
 		}
+	},
+	created(){
+		this.cake = this.Scene.find(Cake);
+		this.child = this.cake.findLayerOrFilling(this.object);
+
+		this.Scene._hammer.get('pinch').set({enable:true});
+		this.Scene._hammer.on('pinchstart', this.pinchstart)
+		this.Scene._hammer.on('pinchmove', this.pinchmove)
+		this.Scene._hammer.on('pinchend', this.pinchend)
+	},
+	beforeDestroy(){
+		this.Scene._hammer.off('pinchstart');
+		this.Scene._hammer.off('pinchmove');
+		this.Scene._hammer.off('pinchend');
 	}
 }
 </script>
