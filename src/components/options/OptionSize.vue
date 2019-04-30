@@ -16,8 +16,7 @@ import { mapGetters } from 'vuex';
 export default {
 	data(){
 		return{
-			original_x: 0,
-			original_z: 0,
+			original_scale: 0,
 			cake: null,
 			child: null,
 		}
@@ -35,36 +34,34 @@ export default {
 	},
 	methods: {
 		pinchstart(e){
-			this.original_x = this.object.scale.x;
-			this.original_z = this.object.scale.z;
+			this.original_scale = this.object.scale.x;
 		},
 
 		pinchmove(e){
-			this.object.scale.x = this.original_x * e.scale;
-			this.object.scale.z = this.original_z * e.scale;
+			let scale = this.original_scale * e.scale;
+			this.setScale(this.object, scale);
 
 			if (this.child != null){
-				this.child.scale.x = this.object.scale.x;
-				this.child.scale.z = this.object.scale.z;
+				this.setScale(this.child, scale);
 			}
 
 			//set the current object scale to the object scale from that is under it if it exceeds it.
 			let object_below = this.getObjectBelow();
 			if(object_below != null && object_below.scale.x < this.object.scale.x + 0.05) {
-				this.object.scale.x = object_below.scale.x;
-				this.object.scale.z = object_below.scale.z;
+				this.setScale(this.object, object_below.scale.x);
 
-				if (this.child != null){
-					this.child.scale.x = this.object.scale.x;
-					this.child.scale.z = this.object.scale.z;
-				}
+				if (this.child != null) 
+					this.setScale(this.child, object_below.scale.x)
 			}
 		},
 
 		pinchend(e){
-			let scale = this.object.scale.x / this.original_x;
-			let original_scale = {x: this.original_x, z: this.original_z};
-			this.$store.getters.getCommandManager.Execute(new ScaleCommand(this.object, scale, original_scale));
+			let scale = this.object.scale.x / this.original_scale;
+			this.$store.getters.getCommandManager.Execute(new ScaleCommand(this.object, scale, this.original_scale));
+		},
+
+		setScale(object, scale){
+			object.scale.set(scale, object.scale.y, scale);
 		},
 
 		getObjectBelow(){

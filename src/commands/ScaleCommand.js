@@ -10,27 +10,25 @@ export default class ScaleCommand{
 		this._child = this._cake.findLayerOrFilling(this._object);
 	}
 
-	Execute(){
-		//scaling is already done in the option menu itself
-	}
+	//manipulation is done in OptionSize.vue
+	Execute(){}
 
 	Undo(){
-		if (this._child != null){
-			this._child.scale.x = this._original_scale.x;
-			this._child.scale.z = this._original_scale.z;
-		}
-
-		this._object.scale.x = this._original_scale.x;
-		this._object.scale.z = this._original_scale.z;
+		if (this._child != null)
+			this.setScale(this._child, this._original_scale);
+		
+		this.setScale(this._object, this._original_scale);
 	}
 
 	Redo(){
-		if (this._child != null){
-			this._child.scale.x *= this._scale;
-			this._child.scale.z *= this._scale;
-		}
+		let scale = this._object.scale.x *= this._scale;
+		if (this._child != null)
+			this.setScale(this._child, scale);
 
-		this._object.scale.x *= this._scale;
-		this._object.scale.z *= this._scale;
+		this.setScale(this._object, scale);
+	}
+
+	setScale(object, scale){
+		object.scale.set(scale, object.scale.y, scale);
 	}
 }
