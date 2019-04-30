@@ -1,11 +1,6 @@
 <template>
 	<div class="option-with-slider">
-		<div class="slider">
-			<span>Z</span>
-			<input type="range" min="0" max="360" v-model="y" @input="change" @change="set">
-			<span>{{y}} deg</span>
-		</div>
-		<div class="set" @click="set">Set Rotation</div>
+		<span class="message">Rotate by dragging</span>
 	</div>
 </template>
 
@@ -41,7 +36,6 @@ export default {
 				this.child.setRotationFromEuler(rotation);
 
 			this.object.setRotationFromEuler(rotation);
-			console.log(this.object.rotation.y);
 		},
 
 		set(){
@@ -55,7 +49,7 @@ export default {
 		},
 
 		panMove(e){
-			let new_y = this.radians(this.deg(this.oldRotation._y) + e.deltaX);
+			let new_y = parseFloat(this.radians(this.deg(this.oldRotation._y) + e.deltaX));
 			let rotation = new THREE.Euler(0, new_y, 0)
 			this.change(rotation);
 		},

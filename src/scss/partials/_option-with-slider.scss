@@ -8,6 +8,11 @@
 	align-items: center;
 	flex-flow: row wrap;
 
+	.message{
+		color: white;
+		text-align: center;
+	}
+
 	.slider{
 		display: flex;
 		flex-flow: row;

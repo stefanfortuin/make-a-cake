@@ -13,8 +13,8 @@ export default class Scene extends THREE.Scene {
 	}
 
 	init() {
-		let container = document.getElementById('container-3d');
-		this._hammer = new Hammer(container);
+		this.container = document.getElementById('container-3d');
+		this._hammer = new Hammer(this.container);
 
 		this.camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.01, 6000);
 		this.camera.position.z = 10;
@@ -62,7 +62,7 @@ export default class Scene extends THREE.Scene {
 		this.raycaster = new THREE.Raycaster();
     	this.renderer.domElement.addEventListener( 'click', this.raycast, false );
 
-		container.appendChild(this.renderer.domElement);
+		this.container.appendChild(this.renderer.domElement);
 	}
 
 	animate = () => {
