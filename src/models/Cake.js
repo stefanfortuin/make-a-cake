@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import Topping from './Topping';
 import Layer from './Layer';
 import Filling from './Filling';
 import { TweenLite } from 'gsap';
