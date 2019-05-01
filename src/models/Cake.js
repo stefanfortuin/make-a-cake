@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import Topping from './Topping';
 import Layer from './Layer';
 import Filling from './Filling';
 import { TweenLite } from 'gsap';
@@ -9,11 +8,6 @@ export default class Cake extends THREE.Object3D{
 		super()
 		this.persons = 5; //default 5
 		this._animations = []
-	}
-
-	Topping(){
-		let height = this.Height();
-		this.add(new Topping(height, this.persons))
 	}
 
 	indexOf(object){
@@ -150,6 +144,14 @@ export default class Cake extends THREE.Object3D{
 		this.children.pop();
 	}
 
+	TopLayer(){
+		let layer = this.children.filter((c) => {
+			if (c.name == "layer" || c.name == "filling")
+				return c
+		});
+		return layer[layer.length - 1];
+	}
+
 	TotalOf(type){
 		return this.children.reduce((t,x) => { 
 			if(x.name === type) 
@@ -160,7 +162,7 @@ export default class Cake extends THREE.Object3D{
 
 	Height(){
 		return this.children.reduce((t,x) => {
-			return t += x.height;
+			return t += x._height;
 		}, 0);
 	}
 }

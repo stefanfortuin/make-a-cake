@@ -3,7 +3,8 @@ import store from '../store';
 import Hammer from 'hammerjs';
 // import { RenderPass, EffectComposer, OutlinePass } from "three-outlinepass";
 // import FBXLoader from 'three-fbxloader-offical'
-var OrbitControls = require('three-orbit-controls')(THREE)
+var OrbitControls = require('three-orbit-controls')(THREE);
+
 
 export default class Scene extends THREE.Scene {
 	constructor() {
@@ -21,12 +22,12 @@ export default class Scene extends THREE.Scene {
 		this.camera.position.y = 10;
 		this.camera.rotation.z = -45 * Math.PI / 180;
 
-		this.controls = new OrbitControls(this.camera);
-		this.controls.minDistance = 10;
-		this.controls.maxDistance = 40;
-		this.controls.enablePan = false;
-		this.controls.minPolarAngle = -90 * Math.PI / 180;
-		this.controls.maxPolarAngle = Math.PI / 2;
+		this.orbit = new OrbitControls(this.camera);
+		this.orbit.minDistance = 10;
+		this.orbit.maxDistance = 40;
+		this.orbit.enablePan = false;
+		this.orbit.minPolarAngle = -90 * Math.PI / 180;
+		this.orbit.maxPolarAngle = Math.PI / 2;
 
 		this.background = new THREE.Color(0xffffff);
 
@@ -56,7 +57,6 @@ export default class Scene extends THREE.Scene {
 		this.renderer.shadowMap.enabled = true;
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 
-		this.raycaster = { x : 0, y : 0 };
 		this.mouse = { x : 0, y : 0 };
 
 		this.raycaster = new THREE.Raycaster();
@@ -67,7 +67,7 @@ export default class Scene extends THREE.Scene {
 
 	animate = () => {
 		requestAnimationFrame(this.animate)
-		this.controls.update();
+		this.orbit.update();
 		this.renderer.render(this, this.camera);
 	}
 
@@ -98,11 +98,11 @@ export default class Scene extends THREE.Scene {
 				cake.displaySelection(object, true);
 
 			store.state.SelectedObject = object;
-			this.controls.enabled = false;
+			this.orbit.enabled = false;
 		}
 		else{
 			store.state.SelectedObject = null;
-			this.controls.enabled = true;
+			this.orbit.enabled = true;
 			cake.reverseSelection();
 		}
 	}
