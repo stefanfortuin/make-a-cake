@@ -13,9 +13,7 @@ import { mapGetters } from 'vuex';
 export default {
 	data(){
 		return{
-			y: 0,
-			oldRotation: null,
-			center: null,
+			oldRotation_y: null,
 			child: null,
 		};
 	},
@@ -31,27 +29,17 @@ export default {
 		}
 	},
 	methods: {
-		change(rotation){
-			if(this.child != null)
-				this.child.setRotationFromEuler(rotation);
-
-			this.object.setRotationFromEuler(rotation);
-		},
-
-		set(){
-			let newRotation = new THREE.Euler(0, this.radians(this.y), 0);
-			this.$store.getters.getCommandManager.Execute(new RotateCommand(this.object, newRotation, this.oldRotation))
-		},
-
 		panStart(e){
-			this.oldRotation = new THREE.Euler(this.object.rotation.x, this.object.rotation.y, this.object.rotation.z);
-			this.center = e.center;
+			this.oldRotation_y = this.object.rotation.y;
 		},
 
 		panMove(e){
-			let new_y = parseFloat(this.radians(this.deg(this.oldRotation._y) + e.deltaX));
-			let rotation = new THREE.Euler(0, new_y, 0)
-			this.change(rotation);
+			let euler_rotation = new THREE.Euler(0, this.radians(this.deg(this.oldRotation_y) + e.deltaX), 0);
+
+			if(this.child != null)
+				this.child.setRotationFromEuler(euler_rotation);
+
+			this.object.setRotationFromEuler(euler_rotation);
 		},
 
 		panEnd(e){
@@ -59,19 +47,13 @@ export default {
 			this.$store.getters.getCommandManager.Execute(new RotateCommand(this.object, newRotation, this.oldRotation))
 		},
 
-		radians(deg){
-			return deg * Math.PI / 180;
-		},
-
-		deg(radians){
-			return radians * 180 / Math.PI;
-		}
+		radians(deg){return deg * Math.PI / 180;},
+		deg(radians){return radians * 180 / Math.PI;}
 	},
 	created(){ 
 		this.Scene._hammer.on('panstart', this.panStart);
 		this.Scene._hammer.on('panend pancancel', this.panEnd);
 		this.Scene._hammer.on('panmove', this.panMove);
-
 		this.child = this.$store.getters.getScene.find(Cake).findLayerOrFilling(this.object);
 	},
 	beforeDestroy(){
@@ -79,7 +61,3 @@ export default {
 	}
 }
 </script>
-
-<style>
-
-</style>
