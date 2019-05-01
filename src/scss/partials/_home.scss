@@ -1,3 +1,55 @@
 .home{
-	
+	font-family: $main-font;
+	position: absolute;
+	top: 50px;
+	width: 100%;
+	height: calc(100% - 50px);
+
+	.title{
+		font-weight: bold;
+		font-size: 26px;
+		margin: 10px 10px 0px 10px;
+	}
+
+	.info{
+		font-style: italic;
+		font-weight: 300;
+		font-size: 16px;
+		margin-left: 10px;
+	}
+
+	.features{
+		width: 100%;
+		height: 300px;
+		margin: 16px 0px 16px 0px;
+
+		display: flex;
+		justify-content: center;
+		flex-flow: row wrap;
+		.feature{
+			display: flex;
+			justify-content: center;
+			flex-flow: row wrap;
+			width: 50%;
+
+			.feature-info{
+				display:flex;
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+				font-style: italic;
+			}
+
+			.feature-img{
+				display:flex;
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+				img{
+					width: 30px;
+					height: 30px;
+				}
+			}
+		}
+	}
 }

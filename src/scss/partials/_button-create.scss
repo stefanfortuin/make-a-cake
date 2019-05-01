@@ -11,6 +11,12 @@
 	background-color: $light-green;
 	z-index: 1;
 
+	animation-iteration-count: 2;
+	animation-duration: 0.75s;
+	animation-name: attract;
+	animation-delay: 1.5s;
+
+
 	.image{
 		width: 16px;
 		height: 16px;
@@ -21,4 +27,18 @@
 	user-select: none;
 	cursor: pointer;
 	box-shadow: 0px 0px 16px $light-green;
+}
+
+@keyframes attract {
+	0% {
+		box-shadow: 0px 0px 0px $light-green;
+	}
+
+	50% {
+		box-shadow: 0px 0px 16px $light-green;
+	}
+
+	0% {
+		box-shadow: 0px 0px 0px $light-green;
+	}
 }
