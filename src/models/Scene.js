@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import store from '../store';
 import Hammer from 'hammerjs';
-import TransformControls from 'threejs-transformcontrols';
 // import { RenderPass, EffectComposer, OutlinePass } from "three-outlinepass";
 // import FBXLoader from 'three-fbxloader-offical'
 var OrbitControls = require('three-orbit-controls')(THREE);
@@ -58,7 +57,6 @@ export default class Scene extends THREE.Scene {
 		this.renderer.shadowMap.enabled = true;
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 
-		this.raycaster = { x : 0, y : 0 };
 		this.mouse = { x : 0, y : 0 };
 
 		this.raycaster = new THREE.Raycaster();
@@ -91,7 +89,6 @@ export default class Scene extends THREE.Scene {
 		if (intersects.length > 0){
 			let object = intersects[0].object;
 			if(object == store.state.SelectedObject) return;
-			console.log(object);
 
 			cake.reverseSelection();
 			

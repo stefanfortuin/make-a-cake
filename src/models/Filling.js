@@ -5,7 +5,6 @@ export default class Filling extends THREE.Mesh{
 	constructor(size, index){
 		let geometry = new THREE.CylinderBufferGeometry(1, 1, 0.6, 22);
 		let material = new THREE.MeshLambertMaterial({color: 0xff0000});
-		// geometry.translate(0, 0.5,0);
 		super(geometry, material)
 
 		this._index = index;
@@ -15,7 +14,6 @@ export default class Filling extends THREE.Mesh{
 		this.name = "filling";
 
 		this.animate()
-		console.log(this);
 	}
 
 	bigger(){

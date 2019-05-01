@@ -11,11 +11,6 @@ export default class Cake extends THREE.Object3D{
 		this._animations = []
 	}
 
-	Topping(){
-		let height = this.Height();
-		this.add(new Topping(height, this.persons))
-	}
-
 	indexOf(object){
 		return this.children.indexOf(object);
 	}
@@ -148,6 +143,14 @@ export default class Cake extends THREE.Object3D{
 
 	DeleteTopping(){
 		this.children.pop();
+	}
+
+	TopLayer(){
+		let layer = this.children.filter((c) => {
+			if (c.name == "layer" || c.name == "filling")
+				return c
+		});
+		return layer[layer.length - 1];
 	}
 
 	TotalOf(type){

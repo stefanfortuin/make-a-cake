@@ -7,8 +7,8 @@ export default class ToppingCommand{
 		this._type = type;
 		this._cake = store.getters.getScene.find(Cake);
 		this._height = this._cake.Height();
-		console.log(this._height);
-		this._topping = new Topping(this._height, 2);
+		this._topLayer = this._cake.TopLayer();
+		this._topping = new Topping(this._height, this._topLayer.scale.x - 0.1);
 	}
 
 	Execute(){
