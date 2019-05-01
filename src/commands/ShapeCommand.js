@@ -11,10 +11,11 @@ export default class ShapeCommand{
 		this._object = object;
 		this._oldGeom = object.geometry
 		this._cake = store.getters.getScene.find(Cake);
+		this._child = this._cake.findLayerOrFilling(this._object);
 	}
 
 	Execute(){
-		this._child = this._cake.findLayerOrFilling(this._object);
+		
 		if (this._child != null){
 			this._childOldGeom = this._child.geometry;
 			this._childNewGeom = this.newGeometry(this._child, this._typeGeom);
@@ -55,7 +56,6 @@ export default class ShapeCommand{
 				break;
 		}
 
-		geom.translate(0, 0.5, 0);
 		return geom;
 	}
 }

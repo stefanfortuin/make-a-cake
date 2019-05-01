@@ -160,7 +160,7 @@ export default class Cake extends THREE.Object3D{
 
 	Height(){
 		return this.children.reduce((t,x) => {
-			return t += x.height;
+			return t += x._height;
 		}, 0);
 	}
 }
