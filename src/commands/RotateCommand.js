@@ -9,12 +9,8 @@ export default class RotateCommand{
 		this._child = store.getters.getScene.find(Cake).findLayerOrFilling(this._object);
 	}
 
-	Execute(){
-		if(this._child != null)
-			this._child.setRotationFromEuler(this._newRotation);
-
-		this._object.setRotationFromEuler(this._newRotation);
-	}
+	//it is being rotated in OptionRotate.vue
+	Execute(){}
 
 	Undo(){
 		if(this._child != null)
@@ -24,6 +20,9 @@ export default class RotateCommand{
 	}
 
 	Redo(){
-		this.Execute();
+		if(this._child != null)
+			this._child.setRotationFromEuler(this._newRotation);
+
+		this._object.setRotationFromEuler(this._newRotation);
 	}
 }
