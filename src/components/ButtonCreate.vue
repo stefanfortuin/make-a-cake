@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="button-create" @click="show = !show">
+    <div class="button-create" @click="showMenu()">
       <img v-if="!show" class="image" src="@/assets/plus.svg">
       <img v-else class="image" src="@/assets/arrow.svg">
     </div>
@@ -24,9 +24,11 @@ export default {
     };
   },
   methods: {
-    create() {
-      this.$router.push({ path: "/create" });
-    }
+	  showMenu(){
+		  (this.$route.path != '/') 
+		  ? this.show = !this.show
+		  : this.$router.push({path: '/create'})
+	  }
   }
 };
 </script>
