@@ -1,9 +1,6 @@
 <template>
 	<div class="create-options">
-		<div class="options" v-if="!creating">
-			<div class="option-button" @click="create">Cake</div>
-		</div>
-		<div class="options" v-else>
+		<div class="options">
 			<div class="option-button" @click="layer">Layer</div>
 			<div class="option-button">Decoration</div>
 			<div class="option-button" @click="topping">Topper</div>
@@ -24,10 +21,6 @@ export default {
 		})
 	},
 	methods:{
-		create(){
-			this.$router.push({path: '/create'});
-			this.close();
-		},
 		layer(){
 			this.$store.getters.getCommandManager.Execute(new LayerCommand(5));
 			this.close();
