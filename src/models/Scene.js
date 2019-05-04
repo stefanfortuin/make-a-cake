@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import store from '../store';
 import Hammer from 'hammerjs';
+import Cake from './Cake';
+import Filling from './Filling';
+import Layer from './Layer';
 // import { RenderPass, EffectComposer, OutlinePass } from "three-outlinepass";
 // import FBXLoader from 'three-fbxloader-offical'
 var OrbitControls = require('three-orbit-controls')(THREE);
@@ -31,17 +34,8 @@ export default class Scene extends THREE.Scene {
 
 		this.background = new THREE.Color(0xffffff);
 
-		var hemisphere = new THREE.DirectionalLight(0xffffff, 1);
-		hemisphere.position.set(50, 200, 22);
-		hemisphere.target.position.set(0, 0, 0);
-
-		hemisphere.shadow.camera.near = 0.5;
-		hemisphere.shadow.camera.far = 5000;
-		hemisphere.shadow.camera.left = -500;
-		hemisphere.shadow.camera.bottom = -500;
-		hemisphere.shadow.camera.right = 500;
-		hemisphere.shadow.camera.top = 500;
-		hemisphere.castShadow = true;
+		var hemisphere = new THREE.HemisphereLight(0xffffff, 1);
+		hemisphere.position.set(50, 100, 50);
 		this.add(hemisphere);
 
 		var ambient = new THREE.AmbientLight(0x404040); // soft white light
@@ -54,7 +48,9 @@ export default class Scene extends THREE.Scene {
 			aplha: true
 		});
 
+		this.renderer.setPixelRatio(window.devicePixelRatio);
 		this.renderer.shadowMap.enabled = true;
+		this.renderer.shadowMap.type = THREE.BasicShadowMap;
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 
 		this.mouse = { x : 0, y : 0 };
@@ -82,12 +78,17 @@ export default class Scene extends THREE.Scene {
 		this.raycaster.setFromCamera( this.mouse, this.camera );   
 
 		let intersects = this.raycaster.intersectObjects( this.children, true );
-		let cake = this.children[2];
+		let cake = this.find(Cake);
 
 		if(cake.isAnimating()) return;
 
 		if (intersects.length > 0){
 			let object = intersects[0].object;
+			if (cake.indexOf(object) == -1){
+				this.resetSelection(cake)
+				return
+			}; 
+
 			if(object == store.state.SelectedObject) return;
 
 			cake.reverseSelection();
@@ -101,10 +102,14 @@ export default class Scene extends THREE.Scene {
 			this.orbit.enabled = false;
 		}
 		else{
-			store.state.SelectedObject = null;
-			this.orbit.enabled = true;
-			cake.reverseSelection();
+			this.resetSelection(cake)
 		}
+	}
+
+	resetSelection(cake){
+		store.state.SelectedObject = null;
+		this.orbit.enabled = true;
+		cake.reverseSelection();
 	}
 
 	// loadObject(name) {

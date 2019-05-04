@@ -3,9 +3,12 @@ import TweenLite from 'gsap/TweenLite';
 
 export default class Filling extends THREE.Mesh{
 	constructor(size, index){
-		let geometry = new THREE.CylinderBufferGeometry(1, 1, 0.6, 22);
+		let geometry = new THREE.CylinderBufferGeometry(2, 2, 0.6, 22);
 		let material = new THREE.MeshLambertMaterial({color: 0xff0000});
 		super(geometry, material)
+
+		this.castShadow = true;
+		this.receiveShadow = true;
 
 		this._index = index;
 		this._size = size;
