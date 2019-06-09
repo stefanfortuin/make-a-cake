@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import Scene from './models/Scene';
 import CommandManager from './models/CommandManager';
 
 Vue.use(Vuex)
@@ -13,8 +12,8 @@ export default new Vuex.Store({
 	  SelectedObject: null,
   },
   mutations: {
-		init(state){
-			state.Scene = new Scene();
+		init(state, scene){
+			state.Scene = scene;
 			state.CommandManager = new CommandManager();
 		},
 
@@ -23,9 +22,9 @@ export default new Vuex.Store({
 		}
   },
   actions: {
-	  	init({state,commit}){
+	  	init({state,commit}, scene){
 			return new Promise((resolve, reject) => {
-				commit("init");
+				commit("init", scene);
 				resolve()
 			})
 		},
@@ -40,7 +39,10 @@ export default new Vuex.Store({
 	  },
 
 	  getSelectedObject: state => {
-		  return state.SelectedObject;
+		  if (state.Scene == null)
+		  	return;
+
+		  return state.Scene.selectedObject;
 	  }
   }
 })

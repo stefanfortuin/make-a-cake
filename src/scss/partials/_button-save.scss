@@ -1,0 +1,20 @@
+.button-save{
+	position: absolute;
+	bottom: 40px;
+	left: 28px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: $light-green;
+	z-index: 1;
+	user-select: none;
+
+	.image{
+		user-select: none;
+		width: 16px;
+		height: 16px;
+	}
+}

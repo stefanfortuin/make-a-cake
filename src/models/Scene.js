@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import store from '../store';
 import Hammer from 'hammerjs';
 import Cake from './Cake';
 import Filling from './Filling';
@@ -14,6 +13,8 @@ export default class Scene extends THREE.Scene {
 		super();
 		this.init();
 		this.animate();
+
+		this.selectedObject = null;
 	}
 
 	init() {
@@ -89,16 +90,16 @@ export default class Scene extends THREE.Scene {
 				return
 			}; 
 
-			if(object == store.state.SelectedObject) return;
+			if(object == this.selectedObject) return;
 
 			cake.reverseSelection();
 			
-			if (store.state.SelectedObject == null)
+			if (this.selectedObject == null)
 				cake.displaySelection(object);
 			else
 				cake.displaySelection(object, true);
 
-			store.state.SelectedObject = object;
+			this.selectedObject = object;
 			this.orbit.enabled = false;
 		}
 		else{
@@ -107,7 +108,7 @@ export default class Scene extends THREE.Scene {
 	}
 
 	resetSelection(cake){
-		store.state.SelectedObject = null;
+		this.selectedObject = null;
 		this.orbit.enabled = true;
 		cake.reverseSelection();
 	}

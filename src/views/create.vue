@@ -11,23 +11,31 @@
 		</transition-group>
 		
 		<div id="container-3d"></div>
+
+		<button-save></button-save>
 	</div>
 </template>
 
 <script>
+import ButtonSave from '@/components/ButtonSave.vue';
 import DeleteCommand from '@/commands/DeleteCommand';
 import Cake from '@/models/Cake';
+import Scene from '@/models/Scene';
 import { mapGetters } from 'vuex';
 
 export default {
 	name: "create",
+	components: {
+		ButtonSave,
+	},
 	computed: {
 		...mapGetters({
 			selected: "getSelectedObject",
 		})
 	},
 	mounted(){
-		this.$store.dispatch("init").then(() => {
+		let scene = new Scene();
+		this.$store.dispatch("init", scene).then(() => {
 			this.$store.getters.getScene.add(new Cake(5));
 		})
 	},
